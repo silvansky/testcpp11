@@ -12,6 +12,27 @@ auto getF(int p) -> std::function<int (int)>
     return [=](int a){ return a * p; };
 }
 
+struct mynum {
+	int a;
+	double b;
+};
+
+mynum operator "" _num(unsigned long long x)
+{
+	mynum mn;
+	mn.a = x;
+	mn.b = x / 100.0;
+	return mn;
+}
+
+mynum operator "" _num(long double x)
+{
+	mynum mn;
+	mn.a = x * 100;
+	mn.b = x;
+	return mn;
+}
+
 int main()
 {
     auto x = 90;
@@ -29,6 +50,14 @@ int main()
 	{
 		std::cout << "v: " << i << std::endl;
 	}
+	
+	mynum m = 87_num;
+	
+	std::cout << m.a << " -- " << m.b << std::endl;
+	
+	m = 0.97_num;
+	
+	std::cout << m.a << " -- " << m.b << std::endl;
 	
     return 0;
 }
