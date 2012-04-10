@@ -1,6 +1,7 @@
 #include <iostream>
 #include <functional>
 #include <vector>
+#include <tuple>
 
 auto getValues() -> std::initializer_list<int>
 {
@@ -33,8 +34,21 @@ mynum operator "" _num(long double x)
 	return mn;
 }
 
+void sep(const char * info)
+{
+	std::cout << std::endl << "------------------------------------------";
+	std::cout << std::endl << info << std::endl << std::endl;
+}
+
 int main()
 {
+	const char * welcomeText = 
+		"*************************************\n"
+		"* Simple C++11 feature testing app. *\n"
+		"*************************************\n";
+	std::cout << std::endl << welcomeText << std::endl;
+	sep("Auto. Lambdas.");
+	
     auto x = 90;
     x++;
     auto f = [](int & b){ return b--; };
@@ -44,12 +58,16 @@ int main()
 	auto g = getF(10);
 	std::cout << g(5) << std::endl;
 	
+	sep("Initializer list. For (:).");
+	
 	std::vector<int> v = getValues();
 	
 	for (auto i : v)
 	{
 		std::cout << "v: " << i << std::endl;
 	}
+	
+	sep("Custom suffix.");
 	
 	mynum m = 87_num;
 	
@@ -58,6 +76,12 @@ int main()
 	m = 0.97_num;
 	
 	std::cout << m.a << " -- " << m.b << std::endl;
+	
+	sep("Tuples.");
+	
+	auto myTuple = std::tuple<int, int, double, std::string>(0, 67, 0.54, "cool");
+	
+	std::cout << std::get<3>(myTuple) << std::endl;
 	
     return 0;
 }
