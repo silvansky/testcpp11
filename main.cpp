@@ -2,6 +2,7 @@
 #include <functional>
 #include <vector>
 #include <tuple>
+#include <regex>
 
 auto getValues() -> std::initializer_list<int>
 {
@@ -82,6 +83,38 @@ int main()
 	auto myTuple = std::tuple<int, int, double, std::string>(0, 67, 0.54, "cool");
 	
 	std::cout << std::get<3>(myTuple) << std::endl;
+	
+	sep("Regular expressions.");
+	
+	const char *  expr = ":";
+	std::cout << "Constructing regexp..." << std::endl;
+	std::regex re;
+	try {
+		re = std::regex(expr);
+	} catch (std::regex_error e) {
+		std::cout << "Failed to construct regex : " << e.what() << " with code " << e.code() << std::endl;
+		return 1;
+	}
+	std::cout << "Regexp constructed!" << std::endl;
+	
+	std::cmatch match;
+	auto str = ":Some words:are separated with:semiclon";
+	std::cout << "String: " << str << std::endl;
+	std::cout << "Regex: " << expr << std::endl;
+	if (std::regex_search(str, match, re))
+	{
+		std::cout << "Match found!" << std::endl;
+		const size_t n = match.size();
+		for (size_t a = 0; a < n; a++)
+		{
+			std::string word(match[a].first, match[a].second);
+			std::cout << word << std::endl;
+		}
+	}
+	else
+	{
+		std::cout << "Match not found!" << std::endl;
+	}
 	
     return 0;
 }
