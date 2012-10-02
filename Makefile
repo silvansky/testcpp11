@@ -1,5 +1,5 @@
-CC=g++-4.7
-OPTS=-Wall -pedantic -std=c++11
+CC=clang
+OPTS=-Wall -pedantic -std=c++0x -stdlib=libc++
 SOURCES=$(wildcard *.cpp)
 OBJECTS=$(SOURCES:.cpp=.o)
 
